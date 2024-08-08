@@ -1,6 +1,9 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { HomePage } from './pages/Home.page';
 import { UsersPage } from './pages/Users.page';
+import { UserPage } from './pages/User.page';
+import { UserEditPage } from './pages/UserEdit.page';
+
 
 const router = createBrowserRouter([
   {
@@ -13,11 +16,11 @@ const router = createBrowserRouter([
   },
   {
     path: '/users/view/:id',
-    element: <p>Not yet implemented</p>,
+    element:<UserPage/>,
   },
   {
     path: '/users/edit/:id',
-    element: <p>Not yet implemented</p>,
+    element:<UserEditPage/>,
   },
 ]);
 
