@@ -18,9 +18,9 @@ export function UserPage(){
         fetch('http://localhost:3000/users/'+id)
           .then((response) => response.json())
           .then((data) => setUser(data));
-      }, []);
+      }, [id]);
     return (
-        <>
+        <>{!user?<p>Loading...</p>:
           <Card radius={'md'} withBorder key={user?.id} w={238}>
             <Card.Section>
               {/* We know where the images are, so we just grab the file based on the filename associated with the user */}
@@ -38,7 +38,7 @@ export function UserPage(){
              component={'a'}>Edit
              </Button>
           </Card>
-          
+         }
         </>
       );
 }

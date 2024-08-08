@@ -1,0 +1,64 @@
+.form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  
+ 
+  form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+
+  form input,
+  form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+
+  button,
+  .MantineButton {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  button:hover,
+  .MantineButton:hover {
+    background-color: #0056b3;
+  }
+  
+
+  .toggle-button {
+    cursor: pointer;
+    margin-bottom: 16px;
+    font-size: 16px;
+    color: #007bff;
+    text-decoration: underline;
+  }
+  
+  .toggle-button:hover {
+    color: #0056b3;
+  }
+  
+
+  .loading-text {
+    font-size: 18px;
+    text-align: center;
+    margin-top: 20px;
+  }
