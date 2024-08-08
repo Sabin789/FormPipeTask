@@ -1,0 +1,13 @@
+.my-table {
+    width: 100%;
+    border-collapse: collapse; /* Ensures no gaps between cells */
+  }
+  
+  .my-table th, .my-table td {
+    padding: 8px;
+    border: 1px solid #ddd; /* Optional: Adds border to cells */
+  }
+  
+  .my-table thead th {
+    background-color: #f4f4f4; /* Optional: Background color for the header */
+  }

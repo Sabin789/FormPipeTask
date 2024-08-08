@@ -11,8 +11,12 @@ import {
   Stack,
   TextInput,
   Title,
+  Pagination,
+  Table
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
+import { useNavigate } from 'react-router-dom';
+import "../CSS/Users.css"
 
 export type User = {
   id: string;
@@ -39,6 +43,14 @@ export function UsersPage() {
   const [genderFilter, setGenderFilter] = useState<string | null>(null);
   const [glassesFilter, setGlassesFilter] = useState<string>('all');
 
+  const [sortKey, setSortKey] = useState<keyof User | null>(null);
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
+  let [table,setTable]=useState(false)
+  const navigate=useNavigate()
+
   useEffect(() => {
     fetch('http://localhost:3000/users')
       .then((response) => response.json())
@@ -50,7 +62,7 @@ export function UsersPage() {
   }, []);
 
   useEffect(() => {
-    let filtered = users;
+    let filtered = [...users];
 
     if (nameFilter) {
       filtered = filtered.filter((user) =>
@@ -67,21 +79,59 @@ export function UsersPage() {
       filtered = filtered.filter((user) => user.gender === genderFilter.toLowerCase());
     }
     if (glassesFilter === 'glasses') {
-      filtered = filtered.filter((user) => user.glasses);
+      filtered = filtered.filter((user) => user.glasses)
     } else if (glassesFilter === 'no-glasses') {
-      filtered = filtered.filter((user) => !user.glasses);
+      filtered = filtered.filter((user) => !user.glasses)
+    }
+
+
+    if (sortKey) {
+      users.sort((a, b) => {
+        if (a[sortKey] < b[sortKey]) return sortOrder === 'asc' ? -1 : 1;
+        if (a[sortKey] > b[sortKey]) return sortOrder === 'asc' ? 1 : -1;
+        return 0;
+      })
     }
 
     setFilteredUsers(filtered);
   }, [nameFilter, hairFilter, eyeFilter, genderFilter, glassesFilter, users]);
 
+
+  const resetFilters=()=>{
+    setNameFilter("")
+    setHairFilter("")
+    setEyeFilter("")
+    setGenderFilter("")
+    setGlassesFilter("all")
+  }
+
+  const tableToggle=()=>{
+    if(table===false){
+      setTable(true)
+    }else{
+      setTable(false)
+    }
+  }
+
+  const paginatedUsers = filteredUsers.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  )
+  
+
   return (
-    <>
+    <>{!table?
+      <div>
       <Title order={1}>Users</Title>
 
-      <Button my={'md'} onClick={toggle}>
-        {opened ? 'Hide filters' : 'Show Filters'}
-      </Button>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <Button my={'md'} onClick={toggle}>
+          {opened ? 'Hide filters' : 'Show Filters'}
+        </Button>
+        <Button my={'md'} onClick={tableToggle}>
+           {false ? 'Hide table' : 'Show table'}
+        </Button>
+      </div>
 
       <Collapse in={opened}>
         <Paper shadow="sm" p={'lg'} mb="md" withBorder bg={'gray.1'} miw={600}>
@@ -119,6 +169,11 @@ export function UsersPage() {
                 <Radio label="No Glasses" value="no-glasses" />
               </Group>
             </Radio.Group>
+            <Radio.Group label="Reset">
+            <Group>
+                <Radio label="Resest filters" onClick={resetFilters}></Radio>
+            </Group>
+            </Radio.Group>
           </Stack>
         </Paper>
       </Collapse>
@@ -146,6 +201,90 @@ export function UsersPage() {
           </Card>
         ))}
       </Group>
+      </div>:
+      <div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <Button my={'md'} onClick={toggle}>
+          {opened ? 'Hide filters' : 'Show Filters'}
+        </Button>
+         <Button my={'md'} onClick={tableToggle}>
+            {true ? 'Hide table' : 'Show table'}
+          </Button>
+        </div>
+        <Collapse in={opened}>
+        <Paper shadow="sm" p={'lg'} mb="md" withBorder bg={'gray.1'} miw={600}>
+          <Stack gap={10}>
+            <Group grow wrap={'wrap'}>
+              <TextInput label="Name" placeholder="Enter user's name to filter list"
+              onChange={(e) => setNameFilter(e.currentTarget.value)} />
+              <Select
+                label="Hair Colour"
+                placeholder="Pick value to filter list"
+                value={hairFilter || ''}
+                onChange={(value) => setHairFilter(value || null)}
+                data={['Black', 'Brown', 'Blonde', 'Red', 'Grey']}
+              />
+              <Select
+                label="Eye Colour"
+                placeholder="Pick value"
+                value={eyeFilter || ''}
+                onChange={(value) => setEyeFilter(value || null)}
+                data={['Brown', 'Blue', 'Green', 'Grey']}
+              />
+              <Select label="Gender" placeholder="Pick value"
+              value={genderFilter || ''}
+              onChange={(value) => setGenderFilter(value || null)}
+               data={['Male', 'Female']} />
+            </Group>
+
+            <Radio.Group label="Glasses?"
+             defaultValue="all"
+             value={glassesFilter}
+              onChange={(value) => setGlassesFilter(value)}>
+              <Group>
+                <Radio label="All" value="all" />
+                <Radio label="Glasses" value="glasses" />
+                <Radio label="No Glasses" value="no-glasses" />
+              </Group>
+            </Radio.Group>
+            <Radio.Group label="Reset">
+            <Group>
+                <Radio label="Resest filters" onClick={resetFilters}></Radio>
+            </Group>
+            </Radio.Group>
+          </Stack>
+        </Paper>
+      </Collapse>
+      <Table className="my-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Gender</th>
+            <th>Hair</th>
+            <th>Eyes</th>
+            <th>Glasses</th>
+          </tr>
+        </thead>
+        <tbody>
+          {paginatedUsers.map((user) => (
+            <tr key={user.id}>
+              <td onClick={()=>{navigate("/users/view/"+user.id)}}>{user.name}</td>
+              <td>{user.gender}</td>
+              <td>{user.hair}</td>
+              <td>{user.eyes}</td>
+              <td>{user.glasses ? 'Yes' : 'No'}</td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+
+      <Pagination
+        value={currentPage}
+        onChange={setCurrentPage}
+        total={Math.ceil(filteredUsers.length / itemsPerPage)}
+        mt="md"
+      />
+      </div>}
     </>
   );
 }

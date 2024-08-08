@@ -4,15 +4,13 @@
       "name": "Alice",
       "avatar": "alice.png",
       "id": "fM8N0UQ",
-      "gender": "female",
+      "gender": "male",
       "hair": "black",
       "eyes": "brown",
       "glasses": false,
       "roles": [
         "1",
-        "2",
-        "3",
-        "4"
+        "2"
       ]
     },
     {
@@ -103,16 +101,18 @@
       ]
     },
     {
-      "name": "Ingrid",
+      "name": "Ingrid123",
       "avatar": "ingrid.png",
       "id": "Ignq9xP",
       "gender": "female",
       "hair": "black",
       "eyes": "brown",
-      "glasses": false,
+      "glasses": "False",
       "roles": [
         "1",
-        "2"
+        "2",
+        "3",
+        "4"
       ]
     },
     {
