@@ -16,8 +16,6 @@ export function UserPage(){
     const { id } = useParams<{ id: string }>()
     const navigate=useNavigate()
 
-    let pronoun:string
-    let number:string
     const getUser = async () => {
         try {
                 const response = await fetch(`http://localhost:3000/users/${id}`);

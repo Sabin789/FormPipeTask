@@ -42,7 +42,7 @@ export function UsersPage() {
   const [eyeFilter, setEyeFilter] = useState<string | null>(null);
   const [genderFilter, setGenderFilter] = useState<string | null>(null);
   const [glassesFilter, setGlassesFilter] = useState<string>('all');
-  const [roleFilter, setRoleFilter] = useState<string | null>(null);
+  const [roleFilter, setRoleFilter] = useState<string[]>([]);
 
   const [sortKey, setSortKey] = useState<keyof User | null>(null);
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
@@ -79,8 +79,10 @@ export function UsersPage() {
     if (genderFilter) {
       filtered = filtered.filter((user) => user.gender === genderFilter.toLowerCase());
     }
-    if (roleFilter) {
-      filtered = filtered.filter((user) => user.gender === roleFilter.toLowerCase());
+    if (roleFilter.length > 0) {
+      filtered = filtered.filter((user) =>
+        user.roles.some((role) => roleFilter.includes(role))
+      )
     }
     if (glassesFilter === 'glasses') {
       filtered = filtered.filter((user) => user.glasses)
@@ -97,16 +99,20 @@ export function UsersPage() {
       })
     }
 
+    
     setFilteredUsers(filtered);
-  }, [nameFilter, hairFilter, eyeFilter, genderFilter, glassesFilter, users]);
+  }, [nameFilter, hairFilter, eyeFilter, genderFilter,roleFilter, glassesFilter, users, sortKey, sortOrder]);
 
+  const handleRoleChange = (value: string[]) => {
+    setRoleFilter(value);  
+  }
 
   const resetFilters=()=>{
     setNameFilter("")
     setHairFilter("")
     setEyeFilter("")
     setGenderFilter("")
-    setRoleFilter("")
+    setRoleFilter([])
     setGlassesFilter("all")
   }
 
@@ -163,12 +169,18 @@ export function UsersPage() {
               onChange={(value) => setGenderFilter(value || null)}
                data={['Male', 'Female']} />
                <Select
-                label="Role"
-                placeholder="Pick role"
-                value={roleFilter || ''}
-                onChange={(value) => setRoleFilter(value || null)}
-                data={['Standard User', 'Administrator', 'Super User', 'Guest User']}
-              />
+                 multiple
+                 label="Role"
+                 placeholder="Pick role"
+                //  value={roleFilter} 
+                 onChange={(val)=>{handleRoleChange(val ? [val] : [])}} 
+                 data={[
+                   { value: '1', label: 'Standard User' },
+                   { value: '2', label: 'Administrator' },
+                   { value: '3', label: 'Super User' },
+                   { value: '4', label: 'Guest User' }
+                 ]}
+                 />
             </Group>
 
             <Radio.Group label="Glasses?"
@@ -247,6 +259,19 @@ export function UsersPage() {
               value={genderFilter || ''}
               onChange={(value) => setGenderFilter(value || null)}
                data={['Male', 'Female']} />
+               <Select
+                 multiple
+                 label="Role"
+                 placeholder="Pick role"
+                //  value={roleFilter} 
+                onChange={(val)=>{handleRoleChange(val ? [val] : [])}} 
+                 data={[
+                   { value: '1', label: 'Standard User' },
+                   { value: '2', label: 'Administrator' },
+                   { value: '3', label: 'Super User' },
+                   { value: '4', label: 'Guest User' }
+                 ]}
+                 />
             </Group>
 
             <Radio.Group label="Glasses?"

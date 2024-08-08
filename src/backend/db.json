@@ -2,19 +2,18 @@
   "users": [
     {
       "name": "Alice123",
-      "avatar": "public/uploads/ymub73.png",
+      "avatar": "public/uploads/ns929w.png",
       "id": "fM8N0UQ",
       "gender": "female",
       "hair": "black",
-      "eyes": "black",
-      "glasses": "False",
+      "eyes": "brown",
+      "glasses": false,
       "roles": [
         "1",
         "2",
         "3",
         "4"
-      ],
-      "file": "public/uploads/4g0r43.png"
+      ]
     },
     {
       "name": "Bob",
