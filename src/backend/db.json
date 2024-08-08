@@ -1,13 +1,13 @@
 {
   "users": [
     {
-      "name": "none23",
+      "name": "Alice",
       "avatar": "alice.png",
       "id": "fM8N0UQ",
-      "gender": "MALE",
-      "hair": "white",
-      "eyes": "grey",
-      "glasses": "False",
+      "gender": "female",
+      "hair": "black",
+      "eyes": "brown",
+      "glasses": false,
       "roles": [
         "1",
         "2",
