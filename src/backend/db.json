@@ -1,17 +1,20 @@
 {
   "users": [
     {
-      "name": "Alice",
-      "avatar": "alice.png",
+      "name": "Alice123",
+      "avatar": "public/uploads/ymub73.png",
       "id": "fM8N0UQ",
-      "gender": "male",
+      "gender": "female",
       "hair": "black",
-      "eyes": "brown",
-      "glasses": false,
+      "eyes": "black",
+      "glasses": "False",
       "roles": [
         "1",
-        "2"
-      ]
+        "2",
+        "3",
+        "4"
+      ],
+      "file": "public/uploads/4g0r43.png"
     },
     {
       "name": "Bob",
@@ -101,18 +104,16 @@
       ]
     },
     {
-      "name": "Ingrid123",
+      "name": "Ingrid",
       "avatar": "ingrid.png",
       "id": "Ignq9xP",
       "gender": "female",
       "hair": "black",
       "eyes": "brown",
-      "glasses": "False",
+      "glasses": false,
       "roles": [
         "1",
-        "2",
-        "3",
-        "4"
+        "2"
       ]
     },
     {

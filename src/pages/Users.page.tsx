@@ -42,6 +42,7 @@ export function UsersPage() {
   const [eyeFilter, setEyeFilter] = useState<string | null>(null);
   const [genderFilter, setGenderFilter] = useState<string | null>(null);
   const [glassesFilter, setGlassesFilter] = useState<string>('all');
+  const [roleFilter, setRoleFilter] = useState<string | null>(null);
 
   const [sortKey, setSortKey] = useState<keyof User | null>(null);
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
@@ -78,6 +79,9 @@ export function UsersPage() {
     if (genderFilter) {
       filtered = filtered.filter((user) => user.gender === genderFilter.toLowerCase());
     }
+    if (roleFilter) {
+      filtered = filtered.filter((user) => user.gender === roleFilter.toLowerCase());
+    }
     if (glassesFilter === 'glasses') {
       filtered = filtered.filter((user) => user.glasses)
     } else if (glassesFilter === 'no-glasses') {
@@ -102,6 +106,7 @@ export function UsersPage() {
     setHairFilter("")
     setEyeFilter("")
     setGenderFilter("")
+    setRoleFilter("")
     setGlassesFilter("all")
   }
 
@@ -141,22 +146,29 @@ export function UsersPage() {
               onChange={(e) => setNameFilter(e.currentTarget.value)} />
               <Select
                 label="Hair Colour"
-                placeholder="Pick value to filter list"
+                placeholder="Pick hair colour"
                 value={hairFilter || ''}
                 onChange={(value) => setHairFilter(value || null)}
                 data={['Black', 'Brown', 'Blonde', 'Red', 'Grey']}
               />
               <Select
                 label="Eye Colour"
-                placeholder="Pick value"
+                placeholder="Pick eye colour"
                 value={eyeFilter || ''}
                 onChange={(value) => setEyeFilter(value || null)}
                 data={['Brown', 'Blue', 'Green', 'Grey']}
               />
-              <Select label="Gender" placeholder="Pick value"
+              <Select label="Gender" placeholder="Pick gender"
               value={genderFilter || ''}
               onChange={(value) => setGenderFilter(value || null)}
                data={['Male', 'Female']} />
+               <Select
+                label="Role"
+                placeholder="Pick role"
+                value={roleFilter || ''}
+                onChange={(value) => setRoleFilter(value || null)}
+                data={['Standard User', 'Administrator', 'Super User', 'Guest User']}
+              />
             </Group>
 
             <Radio.Group label="Glasses?"

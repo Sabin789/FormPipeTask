@@ -13,15 +13,32 @@ export function UserEditPage(){
     const [eyes,setEyes]=useState("")
     const [glasses,setGlasses]=useState("")
     const [roles, setRoles] = useState<string[]>([])
-
+    const [avatar, setAvatar] = useState<File | null>(null);
 
     const { id } = useParams<{ id: string }>()
     const navigate=useNavigate()
     const [isSelectVisible, setIsSelectVisible] = useState(false); 
 
+    let body={
+        name,
+        gender,
+        hair,
+        eyes,
+        glasses,
+        roles
+    } 
+
+
     const toggleSelectVisibility = () => {
       setIsSelectVisible(prev => !prev); 
     };
+
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const image = e.target.files && e.target.files[0];
+        if (image) {
+          setAvatar(image);
+        }
+      }
 
 
      const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -30,18 +47,7 @@ export function UserEditPage(){
       setRoles(selectedOptions);
     };
 
-
-
-    const handleEdit=async(e: FormEvent)=>{
-        e.preventDefault()
-        let body={
-            name,
-            gender,
-            hair,
-            eyes,
-            glasses,
-            roles
-        }   
+    const userEdit=async()=>{
         try {
             await fetch('http://localhost:3000/users/'+id,{
             method:"PATCH",
@@ -50,7 +56,27 @@ export function UserEditPage(){
             },
             body: JSON.stringify(body)
         })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const handleEdit=async(e: FormEvent)=>{
+        e.preventDefault()
+        const formData = new FormData();  
+        if (avatar) formData.append('avatar', avatar);
+        try {
+            if(!avatar){
+            userEdit()
         navigate("/users/view/"+id)
+        }else{
+            userEdit()
+            await fetch('http://localhost:3000/users/' + id, {
+            method: "PATCH",
+            body: formData,
+            })
+        navigate("/users/view/"+id)
+        }
         } catch (error) {
             console.log(error)
         }
@@ -133,7 +159,11 @@ export function UserEditPage(){
                   </select>
                 )}
               </div>
-    
+              <label>File Upload</label>
+              <input
+              type="file"
+              onChange={handleFileChange}
+              />
               <Button type="submit">Submit</Button>
             </form>
           )}
