@@ -130,6 +130,8 @@ export function UsersPage() {
     }else{
       setTable(false)
     }
+    setSortKey(null);
+    setSortOrder('asc')
   }
 
   const handleSort = (key: keyof User) => {
