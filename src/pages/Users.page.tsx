@@ -132,6 +132,15 @@ export function UsersPage() {
     }
   }
 
+  const handleSort = (key: keyof User) => {
+    if (sortKey === key) {
+      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortKey(key);
+      setSortOrder('asc');
+    }
+  }
+
   const paginatedUsers = filteredUsers.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
@@ -303,7 +312,7 @@ export function UsersPage() {
       <Table className="my-table">
         <thead>
           <tr>
-            <th>Name</th>
+            <th onClick={()=>{handleSort("name")}}>Name</th>
             <th>Gender</th>
             <th>Hair</th>
             <th>Eyes</th>
