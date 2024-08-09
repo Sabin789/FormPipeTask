@@ -28,7 +28,6 @@ export function UserEditPage(){
         roles
     } 
 
-
     const toggleSelectVisibility = () => {
       setIsSelectVisible(prev => !prev); 
     };
@@ -36,7 +35,7 @@ export function UserEditPage(){
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const image = e.target.files && e.target.files[0];
         if (image) {
-          setAvatar(image);
+          setAvatar(image)
         }
       }
 
@@ -68,14 +67,18 @@ export function UserEditPage(){
         try {
             if(!avatar){
             userEdit()
-        navigate("/users/view/"+id)
+            navigate("/users/view/"+id)
         }else{
             userEdit()
-            await fetch('http://localhost:3000/users/' + id, {
+            const response=await fetch('http://localhost:3000/users/' + id, {
             method: "PATCH",
             body: formData,
             })
-        navigate("/users/view/"+id)
+            const result = await response.json();
+            if (result.filename) {
+                setAvatar(result.filename);               
+            }
+            navigate("/users/view/"+id)
         }
         } catch (error) {
             console.log(error)

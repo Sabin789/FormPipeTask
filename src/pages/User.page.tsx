@@ -34,11 +34,18 @@ export function UserPage(){
                 const roles = await Promise.all(roleRequests);
                 setRoles(roles)
             }
-            console.log(roles)
         } catch (error) {
             console.log(error)
         }
     }
+
+    const returnPath=(path:string)=>{
+        if (path.includes("public/uploads")){
+          return "/"+path
+        }else{
+          return "/uploads/"+path
+        }
+      }
 
     const getPronoun = (gender: 'female' | 'male') => {
         return gender === 'female' ? 'Her' : 'His';
@@ -74,7 +81,7 @@ export function UserPage(){
           <Card radius={'md'} withBorder key={user?.id} w={238}>
             <Card.Section>
               {/* We know where the images are, so we just grab the file based on the filename associated with the user */}
-              <Image src={`/uploads/${user?.avatar}`} alt={`Avatar for ${user?.name}`} />
+              <Image src={returnPath(user.avatar)} alt={`Avatar for ${user.name}`} />
             </Card.Section>
             <Title my={'md'} order={4}>
               {user?.name}

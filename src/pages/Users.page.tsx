@@ -116,6 +116,14 @@ export function UsersPage() {
     setGlassesFilter("all")
   }
 
+  const returnPath=(path:string)=>{
+    if (path.includes("public/uploads")){
+      return path
+    }else{
+      return "/uploads/"+path
+    }
+  }
+
   const tableToggle=()=>{
     if(table===false){
       setTable(true)
@@ -207,7 +215,7 @@ export function UsersPage() {
           <Card radius={'md'} withBorder key={index} w={238}>
             <Card.Section>
               {/* We know where the images are, so we just grab the file based on the filename associated with the user */}
-              <Image src={`/uploads/${user.avatar}`} alt={`Avatar for ${user.name}`} />
+              <Image src={returnPath(user.avatar)} alt={`Avatar for ${user.name}`} className="avatar-image"/>
             </Card.Section>
             <Title my={'md'} order={4}>
               {user.name}

@@ -2,7 +2,7 @@
   "users": [
     {
       "name": "Alice123",
-      "avatar": "public/uploads/ns929w.png",
+      "avatar": "public/uploads/1p10pa.png",
       "id": "fM8N0UQ",
       "gender": "female",
       "hair": "black",
@@ -10,14 +10,12 @@
       "glasses": false,
       "roles": [
         "1",
-        "2",
-        "3",
-        "4"
+        "2"
       ]
     },
     {
-      "name": "Bob",
-      "avatar": "bob.png",
+      "name": "Bob76543",
+      "avatar": "public/uploads/0npaoi.png",
       "id": "l0m9GZr",
       "gender": "male",
       "hair": "blonde",
